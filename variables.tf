@@ -6,8 +6,3 @@ variable "aws_region" {
   description = "AWS Region"
   default = "us-east-2"
 }
-
-variable "module_source" {
-  description = "Source of the module"
-  type        = string
-}
