@@ -1,2 +1,3 @@
-data "aws_caller_identity" "current" {}
-
+module "environment" {
+  source = "./environment_module"
+}

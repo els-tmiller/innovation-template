@@ -17,6 +17,6 @@ provider "aws" {
   #allowed_account_ids = [var.aws_config.account_id]
 
   default_tags {
-    tags = { "CreatedBy" = "Innovation CodeBuild"}
+    tags = { "CreatedBy" = "Innovation CodeBuild" }
   }
 }

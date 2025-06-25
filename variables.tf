@@ -4,5 +4,5 @@
 #
 variable "aws_region" {
   description = "AWS Region"
-  default = "us-east-2"
+  default     = "us-east-2"
 }

@@ -1,3 +1,3 @@
-output "test" {
-  value = "hello world"
+output "environment_data" {
+  value = module.environment.data
 }
