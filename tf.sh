@@ -23,10 +23,17 @@ elif [ -z "$TERRAFORM_COMMAND" ]; then
   exit 1
 fi
 
+if [ -z "$ENVIRONMENT_NAME" ]; then
+  echo "ENVIRONMENT_NAME is not set."
+  exit 1
+fi
+
+TF_VARIABLES="-var aws_region=${TARGET_REGION} -var environment_name=${ENVIRONMENT_NAME}"
+
 if [[ "$TERRAFORM_COMMAND" == "apply"* ]]; then
-  TERRAFORM_COMMAND="${TERRAFORM_COMMAND} -var aws_region=${TARGET_REGION}"
+  TERRAFORM_COMMAND="${TERRAFORM_COMMAND} ${TF_VARIABLES}"
 elif [[ "$TERRAFORM_COMMAND" == "plan"* ]]; then
-  TERRAFORM_COMMAND="${TERRAFORM_COMMAND} -var aws_region=${TARGET_REGION}"
+  TERRAFORM_COMMAND="${TERRAFORM_COMMAND} ${TF_VARIABLES}"
 fi
 
 echo "Running Terraform command: $TERRAFORM_COMMAND\n"
