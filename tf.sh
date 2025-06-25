@@ -59,4 +59,3 @@ terraform init \
   -backend-config=region=${S3_BACKEND_REGION}
 
 terraform ${TERRAFORM_COMMAND}
-  
