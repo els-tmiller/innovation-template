@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 TARGET_TF_VERSION=$(cat .terraform_version)
 TERRAFORM_VERSION=$(terraform version -json | jq -r '.terraform_version')
@@ -49,4 +49,4 @@ terraform init \
   -backend-config=key=${S3_BACKEND_KEY} \
   -backend-config=region=${S3_BACKEND_REGION}
 
-terraform $terraform_command
+terraform $TERRAFORM_COMMAND
