@@ -1,19 +1,19 @@
 #!/bin/sh
 
-TARGET_TF_VERSION=$(cat .terraform_version)
-TERRAFORM_VERSION=$(terraform version -json | jq -r '.terraform_version')
-
-if [ -z "$TERRAFORM_VERSION" ]; then
-    echo -e "\nTerraform is not installed or not found in PATH."
-    exit 1
-elif
-  [ "$TERRAFORM_VERSION" != "$TARGET_TF_VERSION" ]; then
-    echo -e "\nTerraform version mismatch: expected $TARGET_TF_VERSION, but found $TERRAFORM_VERSION."
-    echo -e "Please install the correct version of Terraform.\n"
-    exit 1
-else
-    echo -e "\nUsing Terraform version: $TERRAFORM_VERSION\n"
-fi
+#TARGET_TF_VERSION=$(cat .terraform_version)
+##TERRAFORM_VERSION=$(terraform version -json | jq -r '.terraform_version')
+#
+#if [ -z "$TERRAFORM_VERSION" ]; then
+#    echo -e "\nTerraform is not installed or not found in PATH."
+#    exit 1
+#elif
+#  [ "$TERRAFORM_VERSION" != "$TARGET_TF_VERSION" ]; then
+#    echo -e "\nTerraform version mismatch: expected $TARGET_TF_VERSION, but found $TERRAFORM_VERSION."
+#    echo -e "Please install the correct version of Terraform.\n"
+#    exit 1
+#else
+#    echo -e "\nUsing Terraform version: $TERRAFORM_VERSION\n"
+#fi
 
 if [ "$#" -ne 0 ]; then
   TERRAFORM_COMMAND="$@"
