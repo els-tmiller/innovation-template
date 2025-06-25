@@ -21,9 +21,15 @@ if [ "$#" -ne 0 ]; then
 elif [ -z "$TERRAFORM_COMMAND" ]; then
   echo "TERRAFORM_COMMAND is not set.\n"
   exit 1
-else
-  echo "Running Terraform command: $TERRAFORM_COMMAND\n"
 fi
+
+if [[ "$TERRAFORM_COMMAND" == "apply"* ]]; then
+  TERRAFORM_COMMAND="${TERRAFORM_COMMAND} -var aws_region=${TARGET_REGION}"
+elif [[ "$TERRAFORM_COMMAND" == "plan"* ]]; then
+  TERRAFORM_COMMAND="${TERRAFORM_COMMAND} -var aws_region=${TARGET_REGION}"
+fi
+
+echo "Running Terraform command: $TERRAFORM_COMMAND\n"
 
 if [ -z "$S3_BACKEND_BUCKET" ]; then
     echo "S3_BACKEND_BUCKET is not set or is empty."
@@ -34,6 +40,9 @@ elif [ -z "$S3_BACKEND_KEY" ]; then
 elif [ -z "$S3_BACKEND_REGION" ]; then
     echo "S3_BACKEND_REGION is not set or is empty."
     exit 1
+elif [ -z "$TARGET_REGION" ]; then
+    echo "TARGET_REGION is not set or is empty."
+    exit 1
 else
     echo "All required environment variables are set."
 fi
@@ -42,6 +51,7 @@ echo "Initializing Terraform with the following backend configuration:\n"
 echo "\tS3_BACKEND_BUCKET: ${S3_BACKEND_BUCKET}"
 echo "\tS3_BACKEND_KEY: ${S3_BACKEND_KEY}"
 echo "\tS3_BACKEND_REGION: ${S3_BACKEND_REGION}\n"
+echo "\tTARGET_REGION: ${TARGET_REGION}\n"
 
 terraform init \
   -backend-config=bucket=${S3_BACKEND_BUCKET} \
@@ -49,3 +59,4 @@ terraform init \
   -backend-config=region=${S3_BACKEND_REGION}
 
 terraform ${TERRAFORM_COMMAND}
+  
