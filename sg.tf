@@ -39,3 +39,13 @@ resource "aws_security_group_rule" "apache_ingress" {
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.lb.id
 }
+
+resource "aws_security_group_rule" "apache_egress" {
+  type              = "egress"
+  security_group_id = aws_security_group.apache.id
+  description       = "Allow all outbound traffic from Apache tasks"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
