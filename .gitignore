@@ -1,0 +1,34 @@
+.DS_Store
+
+### Terraform ###
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+.venv
+
+*.zip
+
+# Terraform lockfile
+.terraform.lock.hcl
+
+# tmp folders
+tmp
+
+# Crash log files
+crash.log
+
+### VisualStudioCode ###
+.vscode/*
+
+### VisualStudioCode Patch ###
+.history
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
