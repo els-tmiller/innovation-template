@@ -14,16 +14,12 @@ resource "aws_iam_role" "ecs_execution" {
   name = "${local.resource_name_prefix}-ecs-execution"
 
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
-
-  tags = local.tags
 }
 
 resource "aws_iam_role" "ecs_task" {
   name = "${local.resource_name_prefix}-ecs-task"
 
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
-
-  tags = local.tags
 }
 
 resource "aws_iam_role_policy" "ecs_execution" {
