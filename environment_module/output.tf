@@ -1,9 +1,21 @@
+output "acm_certificate_arn" {
+  value = data.aws_acm_certificate.dce.arn
+}
+
 output "aws_account_id" {
   value = data.aws_caller_identity.current.account_id
 }
 
 output "aws_region" {
   value = data.aws_region.current.name
+}
+
+output "dns_zone_id" {
+  value = data.aws_route53_zone.dce.id
+}
+
+output "domain_name" {
+  value = data.aws_acm_certificate.dce.domain
 }
 
 output "vpc_id" {
@@ -24,11 +36,14 @@ output "private_subnets" {
 
 output "data" {
   value = {
-    account_id      = data.aws_caller_identity.current.account_id
-    cidr_block      = local.cidr_block
-    private_subnets = local.subnets.private
-    public_subnets  = local.subnets.public
-    region          = data.aws_region.current.name
-    vpc_id          = local.vpc_id
+    acm_certificate_arn = data.aws_acm_certificate.dce.arn
+    account_id          = data.aws_caller_identity.current.account_id
+    cidr_block          = local.cidr_block
+    dns_zone_id         = data.aws_route53_zone.dce.id
+    domain_name         = data.aws_acm_certificate.dce.domain
+    private_subnets     = local.subnets.private
+    public_subnets      = local.subnets.public
+    region              = data.aws_region.current.name
+    vpc_id              = local.vpc_id
   }
 }
