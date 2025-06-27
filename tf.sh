@@ -30,11 +30,11 @@ fi
 
 TF_VARIABLES="-var aws_region=${TARGET_REGION} -var environment_name=${ENVIRONMENT_NAME}"
 
-if [[ "$TERRAFORM_COMMAND" == "apply"* ]]; then
-  TERRAFORM_COMMAND="${TERRAFORM_COMMAND} ${TF_VARIABLES}"
-elif [[ "$TERRAFORM_COMMAND" == "plan"* ]]; then
-  TERRAFORM_COMMAND="${TERRAFORM_COMMAND} ${TF_VARIABLES}"
-fi
+case "$TERRAFORM_COMMAND" in
+  apply* | plan* | destroy*)
+    TERRAFORM_COMMAND="${TERRAFORM_COMMAND} ${TF_VARIABLES}"
+    ;;
+esac
 
 echo "Running Terraform command: $TERRAFORM_COMMAND\n"
 
