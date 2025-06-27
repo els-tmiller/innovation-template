@@ -1,5 +1,5 @@
 resource "aws_ecs_cluster" "ecs" {
-  name = var.environment_name
+  name = local.resource_name_prefix
 }
 
 resource "aws_ecs_task_definition" "apache" {

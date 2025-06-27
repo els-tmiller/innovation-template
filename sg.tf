@@ -1,5 +1,5 @@
 resource "aws_security_group" "lb" {
-  name        = "${var.environment_name}-lb-sg"
+  name        = "${local.resource_name_prefix}-lb-sg"
   description = "Security group for Load Balancer"
   vpc_id      = module.environment.data.vpc_id
 }

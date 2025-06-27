@@ -1,5 +1,5 @@
 resource "aws_lb" "lb" {
-  name               = "${var.environment_name}-lb"
+  name               = local.resource_name_prefix
   internal           = true
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb.id]
@@ -7,7 +7,7 @@ resource "aws_lb" "lb" {
 }
 
 resource "aws_lb_target_group" "apache" {
-  name        = "${var.environment_name}-apache-tg"
+  name        = "${local.resource_name_prefix}-apache-tg"
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"

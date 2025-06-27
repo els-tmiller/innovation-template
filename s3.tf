@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "website_files" {
-  bucket = "${module.environment.aws_account_id}-${var.environment_name}-website-files"
+  bucket = "${module.environment.aws_account_id}-${local.resource_name_prefix}-website-files"
 }
 
 resource "aws_s3_bucket_ownership_controls" "website_files" {
