@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Catch the Falling Items Game</title>
+<style>
+  body {
+    margin: 0;
+    background: #222;
+    overflow: hidden;
+  }
+  canvas {
+    display: block;
+    margin: 0 auto;
+    background: #444;
+  }
+</style>
+</head>
+<body>
+<canvas id="gameCanvas" width="600" height="400"></canvas>
+<script>
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+const basketWidth = 80;
+const basketHeight = 20;
+let basketX = canvas.width/2 - basketWidth/2;
+
+let leftPressed = false;
+let rightPressed = false;
+
+const objects = [];
+const objectSize = 20;
+const spawnInterval = 1000; // milliseconds
+let lastSpawnTime = 0;
+
+let score = 0;
+let gameOver = false;
+
+// Handle keyboard input
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') leftPressed = true;
+  if (e.key === 'ArrowRight') rightPressed = true;
+});
+document.addEventListener('keyup', (e) => {
+  if (e.key === 'ArrowLeft') leftPressed = false;
+  if (e.key === 'ArrowRight') rightPressed = false;
+});
+
+// Object class
+class FallingObject {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.speed = 3 + Math.random() * 2; // random speed
+  }
+  update() {
+    this.y += this.speed;
+  }
+  draw() {
+    ctx.fillStyle = 'gold';
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, objectSize/2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+// Main game loop
+function gameLoop(timestamp) {
+  if (gameOver) {
+    ctx.fillStyle = 'white';
+    ctx.font = '40px Arial';
+    ctx.fillText('Game Over!', canvas.width/2 - 100, canvas.height/2);
+    ctx.font = '20px Arial';
+    ctx.fillText('Score: ' + score, canvas.width/2 - 30, canvas.height/2 + 30);
+    return;
+  }
+
+  // Clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Move basket
+  if (leftPressed && basketX > 0) {
+    basketX -= 5;
+  }
+  if (rightPressed && basketX < canvas.width - basketWidth) {
+    basketX += 5;
+  }
+
+  // Draw basket
+  ctx.fillStyle = 'blue';
+  ctx.fillRect(basketX, canvas.height - basketHeight - 10, basketWidth, basketHeight);
+
+  // Spawn new objects
+  if (timestamp - lastSpawnTime > spawnInterval) {
+    const x = Math.random() * (canvas.width - objectSize) + objectSize/2;
+    objects.push(new FallingObject(x, -objectSize));
+    lastSpawnTime = timestamp;
+  }
+
+  // Update and draw objects
+  for (let i = objects.length - 1; i >= 0; i--) {
+    const obj = objects[i];
+    obj.update();
+    obj.draw();
+
+    // Check for catch
+    if (
+      obj.y + objectSize/2 >= canvas.height - basketHeight - 10 &&
+      obj.x >= basketX &&
+      obj.x <= basketX + basketWidth
+    ) {
+      // Caught
+      objects.splice(i, 1);
+      score++;
+    } else if (obj.y - objectSize/2 > canvas.height) {
+      // Missed
+      objects.splice(i, 1);
+      // Optional: end game if missed too many
+      // For simplicity, not ending game here
+    }
+  }
+
+  // Draw score
+  ctx.fillStyle = 'white';
+  ctx.font = '20px Arial';
+  ctx.fillText('Score: ' + score, 10, 30);
+
+  // Continue the loop
+  requestAnimationFrame(gameLoop);
+}
+
+// Start the game
+requestAnimationFrame(gameLoop);
+</script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 terraform {
-#  backend "s3" {}
+  #  backend "s3" {}
 
   required_providers {
     aws = {
@@ -8,7 +8,7 @@ terraform {
     }
   }
 
-#  required_version = "~> 1.8"
+  #  required_version = "~> 1.8"
 }
 
 #provider "aws" {

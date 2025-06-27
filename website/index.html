@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Innovation Apache Pattern</title>
+  <style>
+    /* Reset some default styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f0f4f8;
+      color: #333;
+      line-height: 1.6;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Container for content */
+    .container {
+      max-width: 800px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    p {
+      margin-bottom: 20px;
+      font-size: 1.1em;
+    }
+
+    a {
+      color: #3498db;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      body {
+        padding: 20px;
+      }
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Innovation Apache Pattern</h1>
+    <p>
+      This is a demo website for the <strong>Innovation Apache Pattern</strong>: ${environment}.
+    </p>
+    <p>
+      It is designed to showcase the deployment of an Apache web server using Terraform and AWS services.
+    </p>
+    <p>
+      It is hosted on AWS Account: <strong>${aws_account_id}</strong> in the region: <strong>${aws_region}</strong>.
+    </p>
+    <p>
+      Bored?... try playing a <a href="game.html">game</a>.
+    </p>
+  </div>
+</body>
+</html>

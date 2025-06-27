@@ -9,11 +9,62 @@ resource "aws_ecs_task_definition" "apache" {
   cpu                      = "256"
   memory                   = "512"
 
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "ARM64"
+  }
+
+  execution_role_arn = aws_iam_role.ecs_execution.arn
+  task_role_arn      = aws_iam_role.ecs_task.arn
+
+  volume {
+    name = "website"
+  }
+
   container_definitions = jsonencode([
     {
-      name      = "apache"
+      name  = "init-container"
+      image = "public.ecr.aws/aws-cli/aws-cli:latest"
+      mountPoints = [
+        {
+          sourceVolume  = "website"
+          containerPath = "/website"
+        }
+      ]
+      entryPoint = [
+        "sh",
+        "-c"
+      ]
+      command = [
+        "aws s3 sync s3://${aws_s3_bucket.website_files.id}/ /website"
+      ],
+      essential = false
+
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = aws_cloudwatch_log_group.logs.name
+          awslogs-region        = module.environment.aws_region
+          awslogs-stream-prefix = "ecs"
+        }
+      }
+    },
+    {
+      name = "apache"
+      dependsOn = [
+        {
+          containerName = "init-container",
+          condition     = "COMPLETE"
+        }
+      ],
       image     = "public.ecr.aws/docker/library/httpd:latest"
       essential = true
+      mountPoints = [
+        {
+          sourceVolume  = "website"
+          containerPath = "/usr/local/apache2/htdocs"
+        }
+      ]
       portMappings = [
         {
           containerPort = 80
@@ -21,6 +72,14 @@ resource "aws_ecs_task_definition" "apache" {
           protocol      = "tcp"
         }
       ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = aws_cloudwatch_log_group.logs.name
+          awslogs-region        = module.environment.aws_region
+          awslogs-stream-prefix = "ecs"
+        }
+      }
     }
   ])
 }
