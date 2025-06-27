@@ -8,8 +8,8 @@ resource "aws_security_group_rule" "lb_ingress" {
   type              = "ingress"
   security_group_id = aws_security_group.lb.id
   description       = "Allow HTTP traffic from the internet to Load Balancer"
-  from_port         = 80
-  to_port           = 80
+  from_port         = 443
+  to_port           = 443
   protocol          = "tcp"
   cidr_blocks       = ["10.0.0.0/8"]
 }

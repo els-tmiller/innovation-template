@@ -25,8 +25,11 @@ resource "aws_lb_target_group" "apache" {
 
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.lb.arn
-  port              = 80
-  protocol          = "HTTP"
+  port              = 443
+  protocol          = "HTTPS"
+
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = module.environment.data.acm_certificate_arn
 
   default_action {
     type             = "forward"
