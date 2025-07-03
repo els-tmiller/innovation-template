@@ -1,0 +1,21 @@
+# All git related files
+.git
+.github
+.gitignore
+
+# Dockerfile
+.dockerignore
+Dockerfile
+
+# Helper Scripts
+env.sh
+tf-docker.sh
+
+# Terraform files
+.terraform
+.terraform.lock.hcl
+*.tfstate
+*.tfvars
+
+# temporary credentials
+.temporary_credentials
