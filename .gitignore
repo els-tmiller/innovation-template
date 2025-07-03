@@ -3,6 +3,9 @@
 # temporary credentials
 .temporary_credentials
 
+# environment helper
+utils/env.sh
+
 ### Terraform ###
 # Local .terraform directories
 **/.terraform/*
