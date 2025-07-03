@@ -10,8 +10,8 @@ provider "aws" {
   region = var.aws_region
 
   default_tags {
-    tags = { 
-      "CreatedBy"   = "Innovation CodeBuild" 
+    tags = {
+      "CreatedBy"   = "Innovation CodeBuild"
       "Environment" = var.environment_name
     }
   }
