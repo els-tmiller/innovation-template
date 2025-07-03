@@ -29,8 +29,4 @@ export ENVIRONMENT_NAME="$ENVIRONMENT_NAME"
 export TARGET_REGION="$TARGET_REGION"
 EOF
 
-# Make the script executable
-chmod +x "$OUTPUT_FILE"
-
 echo "Environment variables script '$OUTPUT_FILE' has been created."
-

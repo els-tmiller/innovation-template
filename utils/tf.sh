@@ -3,6 +3,11 @@
 # This script is used by CodeBuild to run Terraform for innovation patterns.
 # It may also be used locally for testing/development purposes, by setting the required environment variables.
 
+# Check to see if environment file exists
+if [ -f "utils/pattern_env.sh" ]; then
+  source utils/pattern_env.sh
+fi
+
 # Verify Terraform version matches that specified in .terraform_version
 if [ -f ".terraform_version" ]; then
   TARGET_TF_VERSION=$(cat .terraform_version)
