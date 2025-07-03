@@ -4,8 +4,14 @@
 # It may also be used locally for testing/development purposes, by setting the required environment variables.
 
 # Verify Terraform version matches that specified in .terraform_version
-TARGET_TF_VERSION=$(cat .terraform_version)
-TERRAFORM_VERSION=$(terraform version | grep 'Terraform v' | awk '{print $2}' | sed 's/v//')
+if [ -f ".terraform" ]; then
+  TARGET_TF_VERSION=$(cat .terraform_version)
+  TERRAFORM_VERSION=$(terraform version | grep 'Terraform v' | awk '{print $2}' | sed 's/v//')
+else
+  echo "File .terraform_version not found. Please ensure you are in the correct directory."
+  exit 1
+fi
+
 
 if [ -z "$TERRAFORM_VERSION" ]; then
   echo "Terraform is not installed or not found in PATH."

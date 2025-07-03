@@ -12,7 +12,7 @@ fi
 # Prompt for environment variables
 read -p "Enter value for S3_BACKEND_BUCKET: " S3_BACKEND_BUCKET
 read -p "Enter value for S3_BACKEND_KEY [default: terraform.tfstate]:" S3_BACKEND_KEY
-read -p "Enter value for AWS_SECRET_ACCESS_KEY: " AWS_SECRET_ACCESS_KEY
+read -p "Enter value for S3_BACKEND_REGION: " S3_BACKEND_REGION
 read -p "Enter value for ENVIRONMENT_NAME: " ENVIRONMENT_NAME
 read -p "Enter value for TARGET_REGION: " TARGET_REGION
 
@@ -22,11 +22,11 @@ S3_BACKEND_KEY=${S3_BACKEND_KEY:-terraform.tfstate}
 # Create the output script with export commands
 cat <<EOF > "$OUTPUT_FILE"
 #!/bin/bash
-export AWS_REGION="$AWS_REGION"
-export AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID"
-export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
-export S3_BUCKET="$S3_BUCKET"
+export S3_BACKEND_BUCKET="$S3_BACKEND_BUCKET"
 export S3_BACKEND_KEY="$S3_BACKEND_KEY"
+export S3_BACKEND_REGION="$S3_BACKEND_REGION"
+export ENVIRONMENT_NAME="$ENVIRONMENT_NAME"
+export TARGET_REGION="$TARGET_REGION"
 EOF
 
 # Make the script executable
