@@ -4,7 +4,7 @@
 # It may also be used locally for testing/development purposes, by setting the required environment variables.
 
 # Verify Terraform version matches that specified in .terraform_version
-if [ -f ".terraform" ]; then
+if [ -f ".terraform_version" ]; then
   TARGET_TF_VERSION=$(cat .terraform_version)
   TERRAFORM_VERSION=$(terraform version | grep 'Terraform v' | awk '{print $2}' | sed 's/v//')
 else
