@@ -1,5 +1,11 @@
 .DS_Store
 
+# temporary credentials
+.temporary_credentials
+
+# environment helper
+pattern_env.sh
+
 ### Terraform ###
 # Local .terraform directories
 **/.terraform/*
